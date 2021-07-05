@@ -25,7 +25,7 @@ impl Module {
         new_module: NewModule,
         connection: &PgConnection,
     ) -> QueryResult<Module> {
-        diesel::insert_into(characters::table)
+        diesel::insert_into(modules::table)
             .values(&new_module)
             .get_result(connection)
     }
@@ -70,11 +70,11 @@ pub struct NewModuleCharacter {
 
 impl ModuleCharacter {
     pub fn create(
-        new_module: NewModuleCharacter,
+        new_module_character: NewModuleCharacter,
         connection: &PgConnection,
     ) -> QueryResult<ModuleCharacter> {
-        diesel::insert_into(characters::table)
-            .values(&new_module)
+        diesel::insert_into(module_characters::table)
+            .values(&new_module_character)
             .get_result(connection)
     }
 
@@ -85,12 +85,12 @@ impl ModuleCharacter {
     pub fn read_all(
         connection: &PgConnection,
     ) -> QueryResult<Vec<ModuleCharacter>> {
-        modules::table.order(modules::id).load::<ModuleCharacter>(connection)
+        module_characters::table.order(module_characters::id).load::<ModuleCharacter>(connection)
     }
 
-    pub fn update(id: i16, module: ModuleCharacter, connection: &PgConnection) -> bool {
-        diesel::update(modules::table.find(id))
-            .set(&module)
+    pub fn update(id: i16, module_character: ModuleCharacter, connection: &PgConnection) -> bool {
+        diesel::update(module_characters::table.find(id))
+            .set(&module_character)
             .execute(connection)
             .is_ok()
     }
