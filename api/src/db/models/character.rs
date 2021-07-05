@@ -8,7 +8,7 @@ pub use crate::db::schema::characters;
 #[table_name = "characters"]
 pub struct Character {
     pub id: i16,
-    pub level: i8,
+    pub level: u8,
     pub simplified: String,
     pub traditional: String,
     pub pinyin: String,
@@ -18,7 +18,7 @@ pub struct Character {
 #[derive(Debug, Insertable)]
 #[table_name = "characters"]
 pub struct NewCharacter {
-    pub level: i8,
+    pub level: u8,
     pub simplified: String,
     pub traditional: Option<String>,
     pub pinyin: String,
@@ -35,7 +35,7 @@ impl Character {
             .get_result(connection)
     }
 
-    pub fn get_character(id: i32, connection: &PgConnection) -> QueryResult<Character> {
+    pub fn get_character(id: i16, connection: &PgConnection) -> QueryResult<Character> {
         characters::table.find(id).first::<Character>(connection)
     }
 
@@ -45,14 +45,14 @@ impl Character {
         characters::table.order(characters::id).load::<Character>(connection)
     }
 
-    pub fn update(id: i32, hero: Character, connection: &PgConnection) -> bool {
+    pub fn update(id: i16, character: Character, connection: &PgConnection) -> bool {
         diesel::update(characters::table.find(id))
             .set(&character)
             .execute(connection)
             .is_ok()
     }
 
-    pub fn delete(id: i32, connection: &PgConnection) -> bool {
+    pub fn delete(id: i16, connection: &PgConnection) -> bool {
         diesel::delete(characters::table.find(id)).execute(connection).is_ok()
     }
 }
