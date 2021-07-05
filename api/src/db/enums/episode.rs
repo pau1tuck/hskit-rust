@@ -5,3 +5,9 @@ pub enum Episode {
     Empire,
     Jedi,
 }
+#[derive(Debug, PartialEq, DbEnum, Clone, GraphQLEnum)]
+#[PgType = "level_enum"]
+pub enum Level {
+    Toilet,
+    Water,
+}
