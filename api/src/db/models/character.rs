@@ -7,7 +7,7 @@ pub use crate::db::schema::characters;
 #[derive(AsChangeset, Queryable, Identifiable, Debug, Clone, PartialEq)]
 #[table_name = "characters"]
 pub struct Character {
-    pub id: i32,
+    pub id: i16,
     pub level: i8,
     pub simplified: String,
     pub traditional: String,
